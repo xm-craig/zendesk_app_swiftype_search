@@ -1,0 +1,30 @@
+{{#if records.page.length}}
+  <p class="count"><strong>{{count}}</strong></p>
+  <table class="table table-condensed">
+    <tbody>
+      {{#each records.page}}
+          <tr>
+            <td><a href="{{this.url}}" target="_blank">{{this.title}}</a></td>
+            {{#if this.type}}
+                <td class="type">{{this.type}}</td>
+            {{/if}}
+          </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+ {{#if info.page.is_paged}}
+    <div class="search-results-pagination clearfix">
+      <p class="paging-counter">Page {{info.page.current_page}} of {{info.page.num_pages}}</p>
+      {{#if info.page.previous_page}}
+        <a data-url="{{info.page.previous_page}}" href="#" class="left page-link">&larr; {{t "search.previous"}}</a>
+      {{/if}}
+      {{#if info.page.next_page}}
+        <a data-url="{{info.page.next_page}}" href="#" class="right page-link">{{t "search.next"}} &rarr;</a>
+      {{/if}}
+    </div>
+  {{/if}}
+
+{{else}}
+  {{t "global.no_results"}}
+{{/if}}

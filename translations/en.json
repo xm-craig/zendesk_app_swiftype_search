@@ -1,0 +1,51 @@
+{
+    "app": {
+        "title": "Sidebar Search",
+        "description": "Sidebar search app for Swiftype",
+        "parameters": {
+            "engine_key": {
+                "label": "Engine Key",
+                "helpText": "The engine key from your Swiftype account."
+            },
+            "per_page": {
+                "label": "Results Limit",
+                "helpText": "Specify how many results to display in the app. Defaults to 10."
+            },
+            "title_property": {
+                "label": "Title Property",
+                "helpText": "Name of the page property you want to use as the title in the search results. Defaults to title."
+            },
+            "type_property": {
+                "label": "Type Property",
+                "helpText": "A secondary page property to use in the search results i.e. doc-type. Optional"
+            },
+            "enable_suggestions": {
+                "label": "Enable Suggestions",
+                "helpText": "Provide search suggestions based on the subject of the current ticket. Optional"
+            }
+        }
+    },
+    "global": {
+        "error": {
+            "title": "An error occurred.",
+            "message": "Please try the previous action again.",
+            "data": "Data could not be read.",
+            "invalid": "Invalid search: Invalid date format.",
+            "unavailable": "Sorry, we could not complete your search query. Please try again."
+        },
+        "loading": "Initializing app...",
+        "searching": "Searching...",
+        "no_results": "No results found."
+    },
+    "stopwords": {
+        "exclusions": "zendesk,a,is,about,above,after,again,against,all,am,an,and,any,are,aren't,as,at,be,because,been,before,being,below,between,both,but,by,can't,cannot,could,couldn't,did,didn't,do,does,doesn't,doing,don't,down,during,each,few,for,from,further,had,hadn't,has,hasn't,have,haven't,having,he,he'd,he'll,he's,her,here,here's,hers,herself,him,himself,his,how,how's,i,i'd,i'll,i'm,i've,if,in,into,is,isn't,it,it's,its,itself,let's,me,more,most,mustn't,my,myself,no,nor,not,of,off,on,once,only,or,other,ought,our,ours,ourselves,out,over,own,same,shan't,she,she'd,she'll,she's,should,shouldn't,so,some,such,than,that,that's,the,their,theirs,them,themselves,then,there,there's,these,they,they'd,they'll,they're,they've,this,those,through,to,too,under,until,up,very,was,wasn't,we,we'd,we'll,we're,we've,were,weren't,what,what's,when,when's,where,where's,which,while,who,who's,whom,why,why's,with,won't,would,wouldn't,you,you'd,you'll,you're,you've,your,yours,yourself,yourselves"
+    },
+    "search": {
+        "search": "Search for:",
+        "results": "{{count}} result(s):",
+        "previous": "previous",
+        "next": "next",
+        "suggestions": "Suggestions:",
+        "keywords": "Type in some keywords..."
+    }
+}

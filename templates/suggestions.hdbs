@@ -1,0 +1,6 @@
+{{#if searchSuggestions.length}}
+  <span class="title">{{t "search.suggestions"}}</span>
+  {{#each searchSuggestions}}
+    <a class="suggestion" href="#">{{this}}</a>
+  {{/each}}
+{{/if}}

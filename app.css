@@ -1,0 +1,104 @@
+header .logo {
+    background-image:app-asset-url("logo-small.png");
+}
+.options {
+    *zoom: 1;
+    margin-bottom: 10px;
+}
+.options:before,
+.options:after {
+    display: table;
+    line-height: 0;
+    content: "";
+}
+.options:after {
+    clear: both;
+}
+.search-results-pagination {
+    padding: 8px;
+    margin-top: 8px;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+.search-results-pagination .page-link {
+    margin-top: -15px;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+.toggle-advanced a {
+    float: right;
+    margin-top: 5px;
+}
+.search-bar {
+    margin: 10px 0;
+}
+.search-bar .search-box {
+    width: 240px;
+}
+.basic {
+    display: none;
+}
+.advanced-options-wrapper {
+    display: none;
+}
+.advanced-options-wrapper.visible {
+    background: #f5f5f5;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.advanced-options {
+    padding: 10px 20px 15px;
+    font-size: 11px;
+}
+.advanced-options .advanced-option {
+    margin-top: 15px;
+}
+.advanced-options .assignee-label {
+    display: inline;
+}
+select {
+    border: 1px solid lightGrey;
+    height: 25px;
+}
+.date {
+    width: 80px;
+    height: 16px;
+}
+.table {
+    margin-top: 10px;
+}
+.table td {
+    border-top: 1px solid #EEE;
+}
+.results-wrapper {
+    margin-top: 12px;
+}
+.searching {
+    display: none;
+}
+.type {
+    text-align: right;
+    white-space: nowrap;
+}
+.suggestions {
+    padding-top: 5px;
+}
+.suggestions .suggestion {
+    padding: 2px 3px;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    text-shadow: 1px 1px 1px white;
+    margin-bottom: 3px;
+    display: inline-block;
+}
+.suggestions .suggestion:hover {
+    background: #d9d9d9;
+    color: #000;
+}
+.brand-label {
+    margin-bottom: 7px;
+}

@@ -1,0 +1,17 @@
+<div class="search-container">
+  <form action="" class="search">
+    <div class="search-bar">
+      <div class="search-wrapper input-append">
+        <input class="search-box" type="text">
+        <button id="search-submit" class="btn" type="button">search</button>
+      </div>
+      <div class="suggestions"></div>
+    </div>
+  </form>
+</div>
+
+<div class="results-wrapper">
+  <div class="searching">{{t "global.searching"}}</div>
+  <div class="results">
+  </div>
+</div>
