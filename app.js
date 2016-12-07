@@ -11,8 +11,8 @@
             'searchEngine.done': 'handleResults',
             'searchEngine.fail': 'handleFail',
             'click .suggestion': 'suggestionClicked',
-            'click #search-submit': 'doTheSearch',
-            'click .page-link': 'fetchPage',
+            'click #search-submit': 'submitUserSearch',
+            'click .page-link': 'fetchNextPage',
             'keydown .search-box': 'handleKeydown',
             'requiredProperties.ready': 'loadSearchSuggestions'
         },
@@ -75,7 +75,7 @@
             var $searchBox = this.$('.search-box');
             $searchBox.val($searchBox.val() + ' ' + this.$(e.target).text());
 
-            this.doTheSearch();
+            this.submitUserSearch();
 
             return false;
         },
@@ -91,7 +91,7 @@
             });
         },
 
-        doTheSearch: function() {
+        submitUserSearch: function() {
             this.$('.results').empty();
             this.$('.searching').show();
 
@@ -100,13 +100,13 @@
 
         handleKeydown: function(e) {
             if (e.which === 13) {
-                this.doTheSearch();
+                this.submitUserSearch();
                 return false;
             }
         },
 
         // fetch the contents of a remote page
-        fetchPage: function(e) {
+        fetchNextPage: function(e) {
             e.preventDefault();
             this.$('.results').empty();
             this.$('.searching').show();
@@ -115,7 +115,7 @@
             this.ajax('searchEngine', this.searchConfig({page: pageNum}));
         },
 
-        // handle search results
+        // handle search results from swiftype search
         handleResults: function(results) {
             var app = this;
             var data = {
@@ -145,47 +145,6 @@
             this.$('.results').html(resultsTemplate);
         },
 
-        handleChanged: _.debounce(function(property) {
-            // test if change event fired before app.activated
-            if (!this.hasActivated) {
-                return;
-            }
-
-            if (property.propertyName === 'ticket.subject') {
-                this.loadSearchSuggestions();
-            }
-        }, 500),
-
-        loadSearchSuggestions: function() {
-            var searchSuggestions = [],
-                ticketSubject = this.ticket().subject(),
-                suggestionsTemplate = "",
-                keywords = "";
-
-            if (this.settings.enable_suggestions && ticketSubject) {
-                keywords = this.extractKeywords(ticketSubject);
-                searchSuggestions.push.apply(searchSuggestions, keywords);
-            }
-
-            suggestionsTemplate = this.renderTemplate('suggestions', {
-                searchSuggestions: searchSuggestions
-            });
-            this.$('.suggestions').html(suggestionsTemplate);
-        },
-
-
-        extractKeywords: function(text) {
-            // strip punctuation and extra spaces
-            text = text.toLowerCase().replace(/[\.,-\/#!$?%\^&\*;:{}=\-_`~()]/g, "").replace(/\s{2,}/g, " ");
-
-            // split by spaces
-            var words = text.split(" "),
-                exclusions = this.I18n.t('stopwords.exclusions').split(","),
-                keywords = _.difference(words, exclusions);
-
-            return keywords;
-        },
-
         handleFail: function(data) {
             var response = JSON.parse(data.responseText);
             var message = "";
@@ -209,45 +168,55 @@
             this.$('.results').html(errorTemplate);
         },
 
+        // Same approach used by Zendesk's Sidebar search app 
+        handleChanged: _.debounce(function(property) {
+            // test if change event fired before app.activated
+            if (!this.hasActivated) {
+                return;
+            }
+
+            if (property.propertyName === 'ticket.subject') {
+                this.loadSearchSuggestions();
+            }
+        }, 500),
+
+
+        // Same approach used by Zendesk's Sidebar search app 
+        loadSearchSuggestions: function() {
+            var searchSuggestions = [],
+                ticketSubject = this.ticket().subject(),
+                suggestionsTemplate = "",
+                keywords = "";
+
+            if (this.settings.enable_suggestions && ticketSubject) {
+                keywords = this.extractKeywords(ticketSubject);
+                searchSuggestions.push.apply(searchSuggestions, keywords);
+            }
+
+            suggestionsTemplate = this.renderTemplate('suggestions', {
+                searchSuggestions: searchSuggestions
+            });
+            this.$('.suggestions').html(suggestionsTemplate);
+        },
+
+        // Same approach used by Zendesk's Sidebar search app
+        extractKeywords: function(text) {
+            // strip punctuation and extra spaces
+            text = text.toLowerCase().replace(/[\.,-\/#!$?%\^&\*;:{}=\-_`~()]/g, "").replace(/\s{2,}/g, " ");
+
+            // split by spaces
+            var words = text.split(" "),
+                exclusions = this.I18n.t('stopwords.exclusions').split(","),
+                keywords = _.difference(words, exclusions);
+
+            return keywords;
+        },
+
         showError: function(title, msg) {
             this.switchTo('error', {
                 title: title || this.I18n.t('global.error.title'),
                 message: msg || this.I18n.t('global.error.message')
             });
-        },
-
-        _safeGetPath: function(propertyPath) {
-            return _.inject(propertyPath.split('.'), function(context, segment) {
-                if (context == null) {
-                    return context;
-                }
-                var obj = context[segment];
-                if (_.isFunction(obj)) {
-                    obj = obj.call(context);
-                }
-                return obj;
-            }, this);
-        },
-
-        _validateRequiredProperty: function(propertyPath) {
-            var value = this._safeGetPath(propertyPath);
-            return value != null && value !== '' && value !== 'no';
-        },
-
-        _getUrlParams: function(url) {
-            var queryString = url.substring(url.indexOf('?') + 1) || "",
-                keyValPairs = [],
-                params = {};
-
-            if (queryString.length) {
-                keyValPairs = queryString.split('&');
-                for (var pairNum = 0; pairNum < keyValPairs.length; pairNum++) {
-                    var key = keyValPairs[pairNum].split('=')[0];
-                    params[key] = (keyValPairs[pairNum].split('=')[1]);
-                }
-            }
-
-            return params;
         }
 
     };
